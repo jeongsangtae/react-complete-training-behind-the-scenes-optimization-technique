@@ -6,19 +6,27 @@ import DemoOutput from "./components/Demo/DemoOutput";
 
 function App() {
   const [showParagraph, setShowParagraph] = useState(false);
+  const [allowToggle, setAllowToggle] = useState(false);
 
   console.log("App RUNNING");
 
   const toggleParagraphHandler = useCallback(() => {
-    setShowParagraph((prevShowParagragh) => {
-      return !prevShowParagragh;
-    });
-  }, []);
+    if (allowToggle) {
+      setShowParagraph((prevShowParagragh) => {
+        return !prevShowParagragh;
+      });
+    }
+  }, [allowToggle]);
+
+  const allowToggleHandler = () => {
+    setAllowToggle(true);
+  };
 
   return (
     <div className="app">
       <h1>Hi there!</h1>
-      <DemoOutput show={false} />
+      <DemoOutput show={showParagraph} />
+      <Button onClick={allowToggleHandler}>Allow Toggling!</Button>
       <Button onClick={toggleParagraphHandler}>Show Paragraph!</Button>
     </div>
   );
